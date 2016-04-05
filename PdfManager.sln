@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfManager", "PdfManager\PdfManager.csproj", "{35225676-C2B3-45FA-9641-BBD2AE731466}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfManagerTests", "PdfManagerTests\PdfManagerTests.csproj", "{574B8EE2-D044-4B84-812E-2960FFE9A733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{35225676-C2B3-45FA-9641-BBD2AE731466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35225676-C2B3-45FA-9641-BBD2AE731466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35225676-C2B3-45FA-9641-BBD2AE731466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PdfManageModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PdfManageModelStoreContainer">
+    <EntitySet Name="UserSet" EntityType="PdfManageModel.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PdfFileSet" EntityType="PdfManageModel.Store.PdfFileSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TagSet" EntityType="PdfManageModel.Store.TagSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TagPdfFile" EntityType="PdfManageModel.Store.TagPdfFile" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserPdfFile" Association="PdfManageModel.Store.UserPdfFile">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="PdfFile" EntitySet="PdfFileSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TagPdfFile_Tag" Association="PdfManageModel.Store.FK_TagPdfFile_Tag">
+      <End Role="Tag" EntitySet="TagSet" />
+      <End Role="TagPdfFile" EntitySet="TagPdfFile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TagPdfFile_PdfFile" Association="PdfManageModel.Store.FK_TagPdfFile_PdfFile">
+      <End Role="PdfFile" EntitySet="PdfFileSet" />
+      <End Role="TagPdfFile" EntitySet="TagPdfFile" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="varbinary(max)" Nullable="false" />
+    <Property Name="LastLoginTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PdfFileSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="true" />
+    <Property Name="FileId" Type="bigint" Nullable="true" />
+    <Property Name="Other1" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Other2" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CreateBy_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TagSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TagPdfFile">
+    <Key>
+      <PropertyRef Name="Tags_Id" />
+      <PropertyRef Name="PdfFiles_Id" />
+    </Key>
+    <Property Name="Tags_Id" Type="int" Nullable="false" />
+    <Property Name="PdfFiles_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserPdfFile">
+    <End Role="User" Type="PdfManageModel.Store.UserSet" Multiplicity="1" />
+    <End Role="PdfFile" Type="PdfManageModel.Store.PdfFileSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PdfFile">
+        <PropertyRef Name="CreateBy_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TagPdfFile_Tag">
+    <End Role="Tag" Type="PdfManageModel.Store.TagSet" Multiplicity="1" />
+    <End Role="TagPdfFile" Type="PdfManageModel.Store.TagPdfFile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TagPdfFile">
+        <PropertyRef Name="Tags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TagPdfFile_PdfFile">
+    <End Role="TagPdfFile" Type="PdfManageModel.Store.TagPdfFile" Multiplicity="*" />
+    <End Role="PdfFile" Type="PdfManageModel.Store.PdfFileSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PdfFile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TagPdfFile">
+        <PropertyRef Name="PdfFiles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="PdfManageModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="PdfManageModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="PdfManageModel.User" />
+          <EntitySet Name="PdfFileSet" EntityType="PdfManageModel.PdfFile" />
+          <AssociationSet Name="UserPdfFile" Association="PdfManageModel.UserPdfFile">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="PdfFile" EntitySet="PdfFileSet" />
+          </AssociationSet>
+          <EntitySet Name="TagSet" EntityType="PdfManageModel.Tag" />
+          <AssociationSet Name="TagPdfFile" Association="PdfManageModel.TagPdfFile">
+            <End Role="Tag" EntitySet="TagSet" />
+            <End Role="PdfFile" EntitySet="PdfFileSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" />
+          <Property Name="Password" Type="Binary" Nullable="false" />
+          <Property Name="LastLoginTime" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="PdfFiles" Relationship="PdfManageModel.UserPdfFile" FromRole="User" ToRole="PdfFile" />
+        </EntityType>
+        <EntityType Name="PdfFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="true" />
+          <Property Name="FileId" Type="Int64" Nullable="true" />
+          <Property Name="Other1" Type="String" Nullable="true" />
+          <Property Name="Other2" Type="String" Nullable="true" />
+          <NavigationProperty Name="CreateBy" Relationship="PdfManageModel.UserPdfFile" FromRole="PdfFile" ToRole="User" />
+          <NavigationProperty Name="Tags" Relationship="PdfManageModel.TagPdfFile" FromRole="PdfFile" ToRole="Tag" />
+        </EntityType>
+        <Association Name="UserPdfFile">
+          <End Type="PdfManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="PdfManageModel.PdfFile" Role="PdfFile" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" />
+          <NavigationProperty Name="PdfFiles" Relationship="PdfManageModel.TagPdfFile" FromRole="Tag" ToRole="PdfFile" />
+        </EntityType>
+        <Association Name="TagPdfFile">
+          <End Type="PdfManageModel.Tag" Role="Tag" Multiplicity="*" />
+          <End Type="PdfManageModel.PdfFile" Role="PdfFile" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PdfManageModelStoreContainer" CdmEntityContainer="PdfManageModelContainer">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(PdfManageModel.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastLoginTime" ColumnName="LastLoginTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PdfFileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(PdfManageModel.PdfFile)">
+        <MappingFragment StoreEntitySet="PdfFileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="FileId" ColumnName="FileId" />
+          <ScalarProperty Name="Other1" ColumnName="Other1" />
+          <ScalarProperty Name="Other2" ColumnName="Other2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TagSet">
+      <EntityTypeMapping TypeName="IsTypeOf(PdfManageModel.Tag)">
+        <MappingFragment StoreEntitySet="TagSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserPdfFile" TypeName="PdfManageModel.UserPdfFile" StoreEntitySet="PdfFileSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="CreateBy_Id" />
+      </EndProperty>
+      <EndProperty Name="PdfFile">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TagPdfFile" TypeName="PdfManageModel.TagPdfFile" StoreEntitySet="TagPdfFile">
+      <EndProperty Name="Tag">
+        <ScalarProperty Name="Id" ColumnName="Tags_Id" />
+      </EndProperty>
+      <EndProperty Name="PdfFile">
+        <ScalarProperty Name="Id" ColumnName="PdfFiles_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
