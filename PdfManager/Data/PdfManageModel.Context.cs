@@ -20,6 +20,11 @@ namespace PdfManager.Data
         {
         }
     
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+    
         public virtual DbSet<User> UserSet { get; set; }
         public virtual DbSet<PdfFile> PdfFileSet { get; set; }
         public virtual DbSet<Tag> TagSet { get; set; }

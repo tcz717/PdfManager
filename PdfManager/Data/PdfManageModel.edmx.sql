@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/05/2016 18:45:43
--- Generated from EDMX file: E:\Code\Desktop\PdfManager\PdfManager\PdfManageModel.edmx
+-- Date Created: 04/05/2016 19:16:08
+-- Generated from EDMX file: E:\Code\Desktop\PdfManager\PdfManager\Data\PdfManageModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,6 +17,15 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_UserPdfFile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PdfFileSet] DROP CONSTRAINT [FK_UserPdfFile];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TagPdfFile_Tag]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TagPdfFile] DROP CONSTRAINT [FK_TagPdfFile_Tag];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TagPdfFile_PdfFile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TagPdfFile] DROP CONSTRAINT [FK_TagPdfFile_PdfFile];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -24,6 +33,15 @@ GO
 
 IF OBJECT_ID(N'[dbo].[UserSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserSet];
+GO
+IF OBJECT_ID(N'[dbo].[PdfFileSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PdfFileSet];
+GO
+IF OBJECT_ID(N'[dbo].[TagSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TagSet];
+GO
+IF OBJECT_ID(N'[dbo].[TagPdfFile]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TagPdfFile];
 GO
 
 -- --------------------------------------------------
@@ -34,7 +52,7 @@ GO
 CREATE TABLE [dbo].[UserSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Username] nvarchar(max)  NOT NULL,
-    [Password] varbinary(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL,
     [LastLoginTime] datetime  NOT NULL
 );
 GO

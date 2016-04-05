@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PdfManager"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="300" Width="300">
+        Title="登录PDF管理系统" Height="189.231" Width="275.769" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="用户名" HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top"/>
+        <Label Content="密码" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtUsername" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="143" Margin="0,5,0,0" VerticalContentAlignment="Bottom"/>
+        <PasswordBox x:Name="txtPassword" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="2" VerticalAlignment="Top" Height="20" Width="143" Margin="0,5,0,0" VerticalContentAlignment="Bottom"/>
+        <Button x:Name="btnLogin" Content="登陆" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="91" Height="25" Click="btnLogin_Click"/>
+        <TextBlock x:Name="txbError" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="179" Foreground="Red"/>
     </Grid>
 </Window>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PdfManager.Data;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,39 @@ namespace PdfManager
         public LoginWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            using (PdfManageModelContainer container = new PdfManageModelContainer())
+            {
+                var name = txtUsername.Text;
+                var pwd = txtPassword.Password;
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    Trace.WriteLine(txbError.Text = "用户名不能为空");
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(pwd))
+                {
+                    Trace.WriteLine(name, txbError.Text = "密码不能为空");
+                    return;
+                }
+
+                if (!container.Login(name, pwd))
+                {
+                    Trace.WriteLine(new { Name = name, Password = pwd }, txbError.Text = "密码错误");
+                    return;
+                }
+
+                DialogResult = true;
+                Close();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txbError.Text = "";
         }
     }
 }
