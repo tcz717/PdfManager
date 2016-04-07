@@ -59,5 +59,11 @@ namespace PdfManager.Data.Tests
                 Assert.IsTrue(container.PdfFileSet.Any(n => n.FileName == pdf.FileName));
             }
         }
+
+        [TestMethod()]
+        public void SearchTest()
+        {
+            Assert.Fail();
+        }
     }
 }

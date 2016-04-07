@@ -10,22 +10,41 @@
     <Window.Resources>
         <CollectionViewSource x:Key="pdfFileViewSource" d:DesignSource="{d:DesignInstance {x:Type Data:PdfFile}, CreateList=True}"/>
         <!--<Data:PdfSearchResult x:Key="SearchResult"/>-->
+        <Style x:Key="BlackIconStyle" TargetType="Image">
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" CanExecute="New_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" CanExecute="True_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Find" Executed="Find_Executed" CanExecute="True_CanExecute"/>
     </Window.CommandBindings>
     <Grid>
         <DockPanel>
-            <Menu DockPanel.Dock="Top" >
-                <Button x:Name="button" Content="Button" Width="75"/>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem x:Name="btnSearch" Command="ApplicationCommands.New">
+                    <MenuItem.Icon>
+                        <Image Source="black/Add.png" Style="{DynamicResource BlackIconStyle}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center">添加</TextBlock>
+                    </MenuItem.Header>
+                </MenuItem>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="black/Find.png" Style="{DynamicResource BlackIconStyle}"/>
+                    <TextBox Width="100" MaxLength="20" Margin="3,0,0,0"/>
+                </StackPanel>
+                <MenuItem x:Name="btnNew" Command="ApplicationCommands.Find">
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center">查找</TextBlock>
+                    </MenuItem.Header>
+                </MenuItem>
             </Menu>
-            <ToolBarTray Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
-                <ToolBar x:Name="toolBar" Margin="0,0,-792,0">
-                    <Button x:Name="btnAdd" Height="21" VerticalAlignment="Top" Width="75" Click="btnAdd_Click">添加</Button>
-                    <Button x:Name="button1" Content="删除" Height="21" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="button2" Content="查询" Height="21" VerticalAlignment="Top" Width="75"/>
-                </ToolBar>
-            </ToolBarTray>
             <TreeView x:Name="trvResult"  Width="150" VerticalContentAlignment="Stretch" SelectedItemChanged="trvResult_SelectedItemChanged">
                 <TreeView.CommandBindings>
                     <CommandBinding Command="MediaCommands.Select" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>

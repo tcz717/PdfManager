@@ -1,6 +1,7 @@
 ﻿using PdfManager.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,6 +47,26 @@ namespace PdfManager.Data
             {
                 return false;
             }
+        }
+
+        public static async Task<PdfSearchResult> Search(this PdfManageModelContainer container, string keyword)
+        {
+            var kw = keyword.ToLower();
+            var set = container.PdfFileSet;
+            var result = new PdfSearchResult()
+            {
+                ByTittle = await set.Where(n => 
+                    n.Tittle.ToLower().Contains(kw)).ToListAsync(),
+                ByOther1 = await set.Where(n =>
+                    n.Other1.ToLower().Contains(kw)).ToListAsync(),
+                ByOther2 = await set.Where(n =>
+                    n.Other2.ToLower().Contains(kw)).ToListAsync(),
+                ByNumber = await set.Where(n =>
+                    n.FileId.ToString().Contains(kw)).ToListAsync(),
+                ByYear = await set.Where(n =>
+                    n.Year.ToString().Contains(kw)).ToListAsync(),
+            };
+            return result;
         }
     }
 }

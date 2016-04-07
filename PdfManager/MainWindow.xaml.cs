@@ -135,9 +135,17 @@ namespace PdfManager
                 }
             }
         }
-        private void Add_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void True_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+        private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            PdfSearchResult result;
+            using (PdfManageModelContainer container = new PdfManageModelContainer())
+            {
+
+            }
         }
     }
 }
