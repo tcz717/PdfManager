@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PdfManager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+        Title="中电建PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded">
     <Grid>
-        
+        <DockPanel  LastChildFill="False">
+            <ToolBarTray Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
+                <ToolBar x:Name="toolBar" Margin="0,0,-792,0">
+                    <Button x:Name="btnAdd" Height="21" VerticalAlignment="Top" Width="75" Click="btnAdd_Click">
+                        <Button.Content>
+                            添加
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="button1" Content="删除" Height="21" VerticalAlignment="Top" Width="75">
+                        
+                    </Button>
+                    <Button x:Name="button2" Content="查询" Height="21" VerticalAlignment="Top" Width="75">
+                        
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+            <TreeView x:Name="treeView"  Width="100" VerticalContentAlignment="Stretch"/>
+        </DockPanel>
     </Grid>
 </Window>

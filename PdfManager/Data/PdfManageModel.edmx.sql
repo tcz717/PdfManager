@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/05/2016 19:16:08
+-- Date Created: 04/06/2016 22:08:54
 -- Generated from EDMX file: E:\Code\Desktop\PdfManager\PdfManager\Data\PdfManageModel.edmx
 -- --------------------------------------------------
 
@@ -17,9 +17,6 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_UserPdfFile]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PdfFileSet] DROP CONSTRAINT [FK_UserPdfFile];
-GO
 IF OBJECT_ID(N'[dbo].[FK_TagPdfFile_Tag]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TagPdfFile] DROP CONSTRAINT [FK_TagPdfFile_Tag];
 GO
@@ -60,14 +57,13 @@ GO
 -- Creating table 'PdfFileSet'
 CREATE TABLE [dbo].[PdfFileSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
+    [Tittle] nvarchar(max)  NOT NULL,
     [CreateTime] datetime  NOT NULL,
     [FileName] nvarchar(max)  NOT NULL,
     [Year] int  NULL,
     [FileId] bigint  NULL,
     [Other1] nvarchar(max)  NULL,
-    [Other2] nvarchar(max)  NULL,
-    [CreateBy_Id] int  NOT NULL
+    [Other2] nvarchar(max)  NULL
 );
 GO
 
@@ -116,21 +112,6 @@ GO
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [CreateBy_Id] in table 'PdfFileSet'
-ALTER TABLE [dbo].[PdfFileSet]
-ADD CONSTRAINT [FK_UserPdfFile]
-    FOREIGN KEY ([CreateBy_Id])
-    REFERENCES [dbo].[UserSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserPdfFile'
-CREATE INDEX [IX_FK_UserPdfFile]
-ON [dbo].[PdfFileSet]
-    ([CreateBy_Id]);
-GO
 
 -- Creating foreign key on [Tags_Id] in table 'TagPdfFile'
 ALTER TABLE [dbo].[TagPdfFile]

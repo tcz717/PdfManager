@@ -11,25 +11,27 @@ namespace PdfManager.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class PdfFile
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PdfFile()
         {
             this.Tags = new HashSet<Tag>();
+            this.CreateTime = DateTime.Now;
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public System.DateTime CreateTime { get; set; }
+        [Required(ErrorMessage = "标题不能为空")]
+        public string Tittle { get; set; }
+        public DateTime CreateTime { get; set; }
+        [Required(ErrorMessage = "文件名不能为空")]
         public string FileName { get; set; }
-        public Nullable<int> Year { get; set; }
-        public Nullable<long> FileId { get; set; }
+        public int? Year { get; set; }
+        public long? FileId { get; set; }
         public string Other1 { get; set; }
         public string Other2 { get; set; }
     
-        public virtual User CreateBy { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }
     }

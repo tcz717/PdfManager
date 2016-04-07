@@ -10,10 +10,6 @@
     <EntitySet Name="PdfFileSet" EntityType="PdfManageModel.Store.PdfFileSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TagSet" EntityType="PdfManageModel.Store.TagSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TagPdfFile" EntityType="PdfManageModel.Store.TagPdfFile" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="UserPdfFile" Association="PdfManageModel.Store.UserPdfFile">
-      <End Role="User" EntitySet="UserSet" />
-      <End Role="PdfFile" EntitySet="PdfFileSet" />
-    </AssociationSet>
     <AssociationSet Name="FK_TagPdfFile_Tag" Association="PdfManageModel.Store.FK_TagPdfFile_Tag">
       <End Role="Tag" EntitySet="TagSet" />
       <End Role="TagPdfFile" EntitySet="TagPdfFile" />
@@ -37,14 +33,13 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tittle" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreateTime" Type="datetime" Nullable="false" />
     <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Year" Type="int" Nullable="true" />
     <Property Name="FileId" Type="bigint" Nullable="true" />
     <Property Name="Other1" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Other2" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="CreateBy_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TagSet">
     <Key>
@@ -61,18 +56,6 @@
     <Property Name="Tags_Id" Type="int" Nullable="false" />
     <Property Name="PdfFiles_Id" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="UserPdfFile">
-    <End Role="User" Type="PdfManageModel.Store.UserSet" Multiplicity="1" />
-    <End Role="PdfFile" Type="PdfManageModel.Store.PdfFileSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="PdfFile">
-        <PropertyRef Name="CreateBy_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TagPdfFile_Tag">
     <End Role="Tag" Type="PdfManageModel.Store.TagSet" Multiplicity="1" />
     <End Role="TagPdfFile" Type="PdfManageModel.Store.TagPdfFile" Multiplicity="*" />
@@ -104,10 +87,6 @@
         <EntityContainer Name="PdfManageModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="UserSet" EntityType="PdfManageModel.User" />
           <EntitySet Name="PdfFileSet" EntityType="PdfManageModel.PdfFile" />
-          <AssociationSet Name="UserPdfFile" Association="PdfManageModel.UserPdfFile">
-            <End Role="User" EntitySet="UserSet" />
-            <End Role="PdfFile" EntitySet="PdfFileSet" />
-          </AssociationSet>
           <EntitySet Name="TagSet" EntityType="PdfManageModel.Tag" />
           <AssociationSet Name="TagPdfFile" Association="PdfManageModel.TagPdfFile">
             <End Role="Tag" EntitySet="TagSet" />
@@ -122,27 +101,21 @@
           <Property Name="Username" Type="String" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" />
           <Property Name="LastLoginTime" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="PdfFiles" Relationship="PdfManageModel.UserPdfFile" FromRole="User" ToRole="PdfFile" />
         </EntityType>
         <EntityType Name="PdfFile">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Tittle" Type="String" Nullable="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" />
           <Property Name="FileName" Type="String" Nullable="false" />
           <Property Name="Year" Type="Int32" Nullable="true" />
           <Property Name="FileId" Type="Int64" Nullable="true" />
           <Property Name="Other1" Type="String" Nullable="true" />
           <Property Name="Other2" Type="String" Nullable="true" />
-          <NavigationProperty Name="CreateBy" Relationship="PdfManageModel.UserPdfFile" FromRole="PdfFile" ToRole="User" />
           <NavigationProperty Name="Tags" Relationship="PdfManageModel.TagPdfFile" FromRole="PdfFile" ToRole="Tag" />
         </EntityType>
-        <Association Name="UserPdfFile">
-          <End Type="PdfManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="PdfManageModel.PdfFile" Role="PdfFile" Multiplicity="*" />
-        </Association>
         <EntityType Name="Tag">
           <Key>
             <PropertyRef Name="Id" />
@@ -175,7 +148,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(PdfManageModel.PdfFile)">
         <MappingFragment StoreEntitySet="PdfFileSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Tittle" ColumnName="Tittle" />
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
           <ScalarProperty Name="Year" ColumnName="Year" />
@@ -193,14 +166,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="UserPdfFile" TypeName="PdfManageModel.UserPdfFile" StoreEntitySet="PdfFileSet">
-      <EndProperty Name="User">
-        <ScalarProperty Name="Id" ColumnName="CreateBy_Id" />
-      </EndProperty>
-      <EndProperty Name="PdfFile">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="TagPdfFile" TypeName="PdfManageModel.TagPdfFile" StoreEntitySet="TagPdfFile">
       <EndProperty Name="Tag">
         <ScalarProperty Name="Id" ColumnName="Tags_Id" />

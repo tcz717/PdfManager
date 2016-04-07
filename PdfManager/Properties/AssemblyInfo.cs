@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("PdfManager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("白屋工作室 ByStudio")]
 [assembly: AssemblyProduct("PdfManager")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © ByStudio 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

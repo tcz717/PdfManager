@@ -28,6 +28,22 @@ namespace PdfManager
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            txbError.Text = "";
+            txtUsername.Focus();
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            //if(e.Key==Key.Enter)
+            
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
             using (PdfManageModelContainer container = new PdfManageModelContainer())
             {
                 var name = txtUsername.Text;
@@ -54,9 +70,11 @@ namespace PdfManager
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            txbError.Text = "";
+            var name = txtUsername.Text;
+            var pwd = txtPassword.Password;
+            e.CanExecute = !(string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(pwd));
         }
     }
 }

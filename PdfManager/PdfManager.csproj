@@ -89,6 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddPdfWindow.xaml.cs">
+      <DependentUpon>AddPdfWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PdfFile.Extend.cs" />
     <Compile Include="Data\PdfManageModelContainer.cs" />
     <Compile Include="Data\User.Extend.cs" />
     <Compile Include="LoginWindow.xaml.cs">
@@ -103,6 +107,10 @@
     <Compile Include="Data\User.cs">
       <DependentUpon>PdfManageModel.tt</DependentUpon>
     </Compile>
+    <Page Include="AddPdfWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

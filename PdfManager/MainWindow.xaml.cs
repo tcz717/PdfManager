@@ -1,10 +1,12 @@
-﻿using PdfManager.Data;
+﻿using Microsoft.Win32;
+using PdfManager.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +46,27 @@ namespace PdfManager
             using (var dbcontext = new PdfManageModelContainer())
             {
                 Trace.WriteLine(dbcontext.UserSet.Any());
+            }
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Multiselect = false,
+                DefaultExt = "pdf",
+                DereferenceLinks = true,
+                Title = "打开PDF文件",
+                Filter = "PDF文件|*.pdf",
+            };
+            if (dialog.ShowDialog() ?? false)
+            {
+                var path = dialog.FileName;
+                AddPdfWindow addwindow = new AddPdfWindow(path);
+                if (addwindow.ShowDialog() ?? false)
+                {
+
+                }
             }
         }
     }
