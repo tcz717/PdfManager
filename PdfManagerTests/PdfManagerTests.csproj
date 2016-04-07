@@ -60,6 +60,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\DataTests.cs" />
+    <Compile Include="Data\PdfFileExtendTests.cs" />
+    <Compile Include="Data\PdfFileTests.cs" />
     <Compile Include="Data\UserExtendTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,6 +75,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="[C...Primer.Plus.%285th.Edition%29].[C..Primer.Plus.%285th.Edition%29].[C.Primer.Plus.%285th.Edition%29].C._Primer_Plus_%285th_Edition%29.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

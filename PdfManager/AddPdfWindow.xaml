@@ -22,33 +22,34 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
-            <RowDefinition/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto" MinHeight="25"/>
+            <RowDefinition Height="Auto" MinHeight="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="90"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="45"/>
         </Grid.ColumnDefinitions>
 
         <Grid.DataContext>
             <data:PdfFile/>
         </Grid.DataContext>
 
-        <Label Content="文件名" HorizontalAlignment="Right" Grid.Row="1"/>
-        <Label Content="标题" HorizontalAlignment="Right" Grid.Row="2"/>
-        <Label Content="年份" HorizontalAlignment="Right" Grid.Row="3"/>
-        <Label Content="文件号码" HorizontalAlignment="Right" Grid.Row="4"/>
-        <Label Content="其他1" HorizontalAlignment="Right" Grid.Row="5"/>
-        <Label Content="其他2" HorizontalAlignment="Right" Grid.Row="6"/>
-        <TextBlock x:Name="txbFileName" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="{Binding FileName}" VerticalAlignment="Center" Margin="0,5,0,4"/>
-        <TextBox x:Name="txtTittle" Grid.Column="1" Height="23"  Grid.Row="2" VerticalAlignment="Center" Text="{Binding Tittle}" />
-        <TextBox x:Name="txtYear" Grid.Column="1" Height="23"  Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Year}" >
+        <Label Content="文件名" HorizontalAlignment="Right" Grid.Row="1" Width="46"/>
+        <Label Content="标题" HorizontalAlignment="Right" Grid.Row="2" Width="34"/>
+        <Label Content="年份" HorizontalAlignment="Right" Grid.Row="3" Width="34"/>
+        <Label Content="文件号码" HorizontalAlignment="Right" Grid.Row="4" Width="58"/>
+        <Label Content="{DynamicResource Other1Name}" HorizontalAlignment="Right" Grid.Row="5" Width="41"/>
+        <Label Content="{DynamicResource Other2Name}" HorizontalAlignment="Right" Grid.Row="6" Width="41"/>
+        <TextBlock x:Name="txbFileName" Grid.Column="1"  Grid.Row="1" TextWrapping="Wrap" Text="{Binding FileName}" VerticalAlignment="Center" Margin="0,5,0,4" Height="16"/>
+        <TextBox x:Name="txtTittle" Grid.Column="1" Height="23"  Grid.Row="2" VerticalAlignment="Center" Text="{Binding Tittle}" Margin="0,1" />
+        <TextBox x:Name="txtYear" Grid.Column="1" Height="23"  Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Year}" Margin="0,1" >
         </TextBox>
-        <TextBox x:Name="txtNumber" Grid.Column="1" Height="23"  Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding FileId}" />
-        <TextBox x:Name="txtOther1" Grid.Column="1" Height="23"  Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Other1}" />
-        <TextBox x:Name="txtOther2" Grid.Column="1" Height="23"  Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Other2}" />
-        <Button x:Name="submit" Content="提交" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Width="75" Command="ApplicationCommands.Save"/>
+        <TextBox x:Name="txtNumber" Grid.Column="1" Height="23"  Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding FileId}" Margin="0,1" />
+        <TextBox x:Name="txtOther1" Grid.Column="1" Height="23"  Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Other1}" Margin="0,1" />
+        <TextBox x:Name="txtOther2" Grid.Column="1" Height="23"  Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding Other2}" Margin="0,1" />
+        <Button x:Name="submit" Content="提交" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Center" Width="75" Command="ApplicationCommands.Save" Height="18" Margin="0,2"/>
+        <TextBlock x:Name="txbNotice" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top"/>
     </Grid>
 </Window>

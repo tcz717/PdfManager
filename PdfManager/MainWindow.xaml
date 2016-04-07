@@ -1,29 +1,91 @@
-﻿<Window x:Class="PdfManager.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PdfManager"
+        xmlns:Data="clr-namespace:PdfManager.Data" x:Class="PdfManager.MainWindow"
         mc:Ignorable="d"
-        Title="中电建PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded">
+        Title="中电建PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded" MinWidth="600" MinHeight="400">
+    <Window.Resources>
+        <CollectionViewSource x:Key="pdfFileViewSource" d:DesignSource="{d:DesignInstance {x:Type Data:PdfFile}, CreateList=True}"/>
+        <!--<Data:PdfSearchResult x:Key="SearchResult"/>-->
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" CanExecute="New_CanExecute"/>
+    </Window.CommandBindings>
     <Grid>
-        <DockPanel  LastChildFill="False">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" >
+                <Button x:Name="button" Content="Button" Width="75"/>
+            </Menu>
             <ToolBarTray Height="21" VerticalAlignment="Top" DockPanel.Dock="Top">
                 <ToolBar x:Name="toolBar" Margin="0,0,-792,0">
-                    <Button x:Name="btnAdd" Height="21" VerticalAlignment="Top" Width="75" Click="btnAdd_Click">
-                        <Button.Content>
-                            添加
-                        </Button.Content>
-                    </Button>
-                    <Button x:Name="button1" Content="删除" Height="21" VerticalAlignment="Top" Width="75">
-                        
-                    </Button>
-                    <Button x:Name="button2" Content="查询" Height="21" VerticalAlignment="Top" Width="75">
-                        
-                    </Button>
+                    <Button x:Name="btnAdd" Height="21" VerticalAlignment="Top" Width="75" Click="btnAdd_Click">添加</Button>
+                    <Button x:Name="button1" Content="删除" Height="21" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="button2" Content="查询" Height="21" VerticalAlignment="Top" Width="75"/>
                 </ToolBar>
             </ToolBarTray>
-            <TreeView x:Name="treeView"  Width="100" VerticalContentAlignment="Stretch"/>
+            <TreeView x:Name="trvResult"  Width="150" VerticalContentAlignment="Stretch" SelectedItemChanged="trvResult_SelectedItemChanged">
+                <TreeView.CommandBindings>
+                    <CommandBinding Command="MediaCommands.Select" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
+                </TreeView.CommandBindings>
+                <TreeView.DataContext>
+                    <Data:PdfSearchResult/>
+                </TreeView.DataContext>
+                <TreeViewItem Header="标题" ItemsSource="{Binding ByTittle}" IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Tittle}" >
+                                <!--<TextBlock.InputBindings>
+                                    <MouseBinding Command="MediaCommands.Select" CommandParameter="{Binding Id}" MouseAction="LeftClick"/>
+                                </TextBlock.InputBindings>-->
+                            </TextBlock>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="文件号" ItemsSource="{Binding ByNumber}" IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Tittle}" />
+                                <TextBlock Text="{Binding FileId}" FontStyle="Italic" FontSize="10" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="年号" ItemsSource="{Binding ByNumber}" IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Tittle}" />
+                                <TextBlock Text="{Binding Year}" FontStyle="Italic" FontSize="10" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="{DynamicResource Other1Name}" ItemsSource="{Binding ByOther1}" IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Tittle}" />
+                                <TextBlock Text="{Binding Other1}" FontStyle="Italic" FontSize="10" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+                <TreeViewItem Header="{DynamicResource Other2Name}" ItemsSource="{Binding ByOther2}" IsExpanded="True">
+                    <TreeViewItem.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Tittle}" />
+                                <TextBlock Text="{Binding Other2}" FontStyle="Italic" FontSize="10" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeViewItem.ItemTemplate>
+                </TreeViewItem>
+            </TreeView>
+            <WindowsFormsHost x:Name="winfromHost" />
         </DockPanel>
     </Grid>
 </Window>

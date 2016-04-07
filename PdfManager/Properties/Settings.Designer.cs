@@ -23,21 +23,39 @@ namespace PdfManager.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("admin")]
         public string DefaultUsername {
             get {
                 return ((string)(this["DefaultUsername"]));
             }
+            set {
+                this["DefaultUsername"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("admin123")]
         public string SettingDefaultPassword {
             get {
                 return ((string)(this["SettingDefaultPassword"]));
+            }
+            set {
+                this["SettingDefaultPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("store")]
+        public string StoreDirectory {
+            get {
+                return ((string)(this["StoreDirectory"]));
+            }
+            set {
+                this["StoreDirectory"] = value;
             }
         }
     }

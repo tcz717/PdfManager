@@ -2,11 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PdfManager.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DefaultUsername" Type="System.String" Scope="Application">
+    <Setting Name="DefaultUsername" Type="System.String" Scope="User">
       <Value Profile="(Default)">admin</Value>
     </Setting>
-    <Setting Name="SettingDefaultPassword" Type="System.String" Scope="Application">
+    <Setting Name="SettingDefaultPassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">admin123</Value>
+    </Setting>
+    <Setting Name="StoreDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">store</Value>
     </Setting>
   </Settings>
 </SettingsFile>

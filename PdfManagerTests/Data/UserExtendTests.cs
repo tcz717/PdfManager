@@ -12,6 +12,15 @@ namespace PdfManager.Data.Tests
     public class UserExtendTests
     {
         PdfManageModelContainer container;
+
+        [ClassInitialize]
+        public static void Preload(TestContext context)
+        {
+            using (PdfManageModelContainer con = new PdfManager.Data.PdfManageModelContainer())
+            {
+                con.UserSet.Any();
+            }
+        }
         [TestInitialize]
         public void Init()
         {
