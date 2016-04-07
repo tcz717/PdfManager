@@ -55,27 +55,27 @@ namespace PdfManager
             }
         }
 
-        private void RefushResult()
+        private void RefushResult(PdfSearchResult result)
         {
-            throw new NotImplementedException();
+            trvResult.DataContext = result;
         }
 
         #region TmepCode
         private void RefushResultTest()
         {
-            using (PdfManageModelContainer container = new PdfManageModelContainer())
-            {
-                var list = container.PdfFileSet;
-                PdfSearchResult result = new PdfSearchResult()
-                {
-                    ByNumber = list.ToList(),
-                    ByOther1 = list.ToList(),
-                    ByOther2 = list.ToList(),
-                    ByTittle = list.ToList(),
-                    ByYear = list.ToList(),
-                };
-                trvResult.DataContext = result;
-            }
+            //using (PdfManageModelContainer container = new PdfManageModelContainer())
+            //{
+            //    var list = container.PdfFileSet;
+            //    PdfSearchResult result = new PdfSearchResult()
+            //    {
+            //        ByNumber = list.ToList(),
+            //        ByOther1 = list.ToList(),
+            //        ByOther2 = list.ToList(),
+            //        ByTittle = list.ToList(),
+            //        ByYear = list.ToList(),
+            //    };
+            //    trvResult.DataContext = result;
+            //}
         }
 
 
@@ -139,13 +139,14 @@ namespace PdfManager
         {
             e.CanExecute = true;
         }
-        private void Find_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             PdfSearchResult result;
             using (PdfManageModelContainer container = new PdfManageModelContainer())
             {
-
+                result = await container.Search(txtKeyword.Text);
             }
+            RefushResult(result);
         }
     }
 }

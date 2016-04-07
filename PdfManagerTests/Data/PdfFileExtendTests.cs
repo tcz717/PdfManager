@@ -60,10 +60,63 @@ namespace PdfManager.Data.Tests
             }
         }
 
+        static PdfFile[] GenarateTestPdf(int count)
+        {
+            PdfFile[] pdfs = new PdfFile[count];
+
+            for (int i = 0; i < count; i++)
+            {
+                pdfs[i] = new PdfFile()
+                {
+                    Tittle = Faker.TextFaker.Sentence(),
+                    FileId = Faker.NumberFaker.Number(),
+                    Year = Faker.NumberFaker.Number(1000, 3000),
+                    FileName = Faker.StringFaker.AlphaNumeric(20),
+                    Other1 = Faker.StringFaker.AlphaNumeric(20),
+                    Other2 = Faker.PhoneFaker.InternationalPhone()
+                };
+            }
+
+            return pdfs;
+        }
+
         [TestMethod()]
         public void SearchTest()
         {
-            Assert.Fail();
+            var pdfs = GenarateTestPdf(100);
+            container.PdfFileSet.AddRange(pdfs);
+            container.SaveChanges();
+
+            for (int i = 0; i < 100; i++)
+            {
+                var result = container.Search(pdfs[i].Tittle.Substring(2));
+                result.Wait(100);
+                Assert.IsTrue(result.Result.ByTittle.Any());
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                var result = container.Search(pdfs[i].Other1.Substring(2));
+                result.Wait(100);
+                Assert.IsTrue(result.Result.ByOther1.Any());
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                var result = container.Search(pdfs[i].Other2.Substring(2));
+                result.Wait(100);
+                Assert.IsTrue(result.Result.ByOther2.Any());
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                var result = container.Search(pdfs[i].Year / 10);
+                result.Wait(100);
+                Assert.IsTrue(result.Result.ByYear.Any());
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                var result = container.Search(pdfs[i].FileId);
+                result.Wait(100);
+                Assert.IsTrue(result.Result.ByNumber.Any());
+            }
         }
     }
 }

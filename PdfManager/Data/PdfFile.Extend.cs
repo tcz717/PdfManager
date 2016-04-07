@@ -49,9 +49,9 @@ namespace PdfManager.Data
             }
         }
 
-        public static async Task<PdfSearchResult> Search(this PdfManageModelContainer container, string keyword)
+        public static async Task<PdfSearchResult> Search(this PdfManageModelContainer container, object keyword)
         {
-            var kw = keyword.ToLower();
+            var kw = keyword.ToString().ToLower();
             var set = container.PdfFileSet;
             var result = new PdfSearchResult()
             {

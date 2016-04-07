@@ -37,7 +37,7 @@
                 </MenuItem>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="black/Find.png" Style="{DynamicResource BlackIconStyle}"/>
-                    <TextBox Width="100" MaxLength="20" Margin="3,0,0,0"/>
+                    <TextBox x:Name="txtKeyword" Width="100" MaxLength="20" Margin="3,0,0,0"/>
                 </StackPanel>
                 <MenuItem x:Name="btnNew" Command="ApplicationCommands.Find">
                     <MenuItem.Header>
@@ -56,9 +56,6 @@
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Tittle}" >
-                                <!--<TextBlock.InputBindings>
-                                    <MouseBinding Command="MediaCommands.Select" CommandParameter="{Binding Id}" MouseAction="LeftClick"/>
-                                </TextBlock.InputBindings>-->
                             </TextBlock>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
@@ -73,7 +70,7 @@
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
                 </TreeViewItem>
-                <TreeViewItem Header="年号" ItemsSource="{Binding ByNumber}" IsExpanded="True">
+                <TreeViewItem Header="年号" ItemsSource="{Binding ByYear}" IsExpanded="True">
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
