@@ -21,6 +21,7 @@ namespace PdfManager.Data
             this.CreateTime = DateTime.Now;
         }
     
+        [Newtonsoft.Json.JsonIgnore]
         public int Id { get; set; }
         [Required(ErrorMessage = "标题不能为空")]
         public string Tittle { get; set; }
@@ -31,7 +32,8 @@ namespace PdfManager.Data
         public long? FileId { get; set; }
         public string Other1 { get; set; }
         public string Other2 { get; set; }
-    
+
+        [Newtonsoft.Json.JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tag> Tags { get; set; }
     }

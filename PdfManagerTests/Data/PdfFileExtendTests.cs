@@ -118,5 +118,40 @@ namespace PdfManager.Data.Tests
                 Assert.IsTrue(result.Result.ByNumber.Any());
             }
         }
+        [TestMethod()]
+        public void EncodeAndDecodeTest()
+        {
+            var pdfs = GenarateTestPdf(100);
+            container.PdfFileSet.AddRange(pdfs);
+            container.SaveChanges();
+
+            using (StreamWriter sw = new StreamWriter("test.json"))
+            {
+                container.EncodePdfList(sw);
+            }
+
+            container.PdfFileSet.RemoveRange(container.PdfFileSet);
+            container.SaveChanges();
+
+
+            using (StreamReader sr = new StreamReader("test.json"))
+            {
+                container.DecodePdfList(sr);
+            }
+            container.SaveChanges();
+
+            foreach (var item in pdfs)
+            {
+                Assert.IsTrue(container.PdfFileSet.Any(n =>
+                    n.Tittle == item.Tittle));
+                    //&&
+                    //n.Year == item.Year &&
+                    //n.FileId == item.FileId &&
+                    //n.CreateTime == item.CreateTime &&
+                    //n.FileName == item.FileName &&
+                    //n.Other1 == item.Other1 &&
+                    //n.Other2 == item.Other2));
+            }
+        }
     }
 }

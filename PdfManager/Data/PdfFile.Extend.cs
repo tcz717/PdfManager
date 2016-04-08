@@ -14,6 +14,7 @@ namespace PdfManager.Data
     {
         public static string StorePath = Path.Combine(Environment.CurrentDirectory,
             Settings.Default.StoreDirectory.ToString());
+
         public PdfFile(string filePath)
             : this()
         {
@@ -32,6 +33,14 @@ namespace PdfManager.Data
         {
             return Path.Combine(StorePath, FileName);
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    PdfFile pdf = obj as PdfFile;
+        //    if (pdf == null)
+        //        return false;
+        //    return pdf.Tittle == pdf.Tittle;
+        //}
     }
     public static class PdfFileExtend
     {

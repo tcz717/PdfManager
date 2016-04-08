@@ -64,7 +64,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Data\DataTests.cs" />
     <Compile Include="Data\PdfFileExtendTests.cs" />
     <Compile Include="Data\PdfFileTests.cs" />
     <Compile Include="Data\UserExtendTests.cs" />

@@ -33,6 +33,20 @@ namespace PdfManager
 
         PdfiumViewer.PdfViewer pdfViewer = new PdfiumViewer.PdfViewer();
 
+        public PdfFile CurrentPdf
+        {
+            get
+            {
+                return currentPdf;
+            }
+
+            set
+            {
+                currentPdf = value;
+                labTittle.DataContext = value;
+            }
+        }
+
         public MainWindow()
         {
             Task.Run(new Action(PreLoadEF));
@@ -87,7 +101,7 @@ namespace PdfManager
             Trace.Assert(result == 1);
             RemoveFileFromResult(pdf);
 
-            if (currentPdf == pdf)
+            if (CurrentPdf == pdf)
             {
                 //PdfiumViewer目前没有更好解决方案
                 pdfViewer.Document.Dispose();
@@ -146,7 +160,7 @@ namespace PdfManager
             });
             pdfViewer.Document?.Dispose();
             pdfViewer.Document = doc;
-            currentPdf = pdf;
+            CurrentPdf = pdf;
         }
 
         private void New_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -269,6 +283,26 @@ namespace PdfManager
             else
                 e.CanExecute = false;
         }
+        
+        private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                DefaultExt = "zip",
+                DereferenceLinks = true,
+                Title = "导出Pdf存档",
+                Filter = "压缩文档|*.zip",
+            };
+
+            if (dialog.ShowDialog() ?? false)
+            {
+                container.Expert(dialog.FileName);
+            }
+        }
+        private void Import_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
         private void Prev_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             PdfSearchItem next = null;
