@@ -12,7 +12,8 @@ namespace PdfManager.Data
 {
     public partial class PdfManageModelContainer
     {
-        public void Expert(string fileName)
+        static readonly int BufferSize = 4096;
+        public async Task ExpertAsync(string fileName)
         {
             using (FileStream stream = File.Create(fileName))
             {
@@ -25,6 +26,22 @@ namespace PdfManager.Data
                 using (StreamWriter sw = new StreamWriter(zip))
                 {
                     EncodePdfList(sw);
+
+                    foreach (var item in PdfFileSet)
+                    {
+                        using (FileStream fs = File.OpenRead(item.GetFullPath()))
+                        {
+                            ZipEntry file = new ZipEntry(item.FileName);
+                            zip.PutNextEntry(file);
+
+                            byte[] buffer = new byte[BufferSize];
+                            int re = 0;
+                            while ((re = await fs.ReadAsync(buffer, 0, BufferSize)) > 0)
+                            {
+                                zip.Write(buffer, 0, BufferSize);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -35,11 +52,6 @@ namespace PdfManager.Data
             js.NullValueHandling = NullValueHandling.Ignore;
             using (JsonTextWriter writer = new JsonTextWriter(sw) { CloseOutput = false })
             {
-                //    foreach (var item in PdfFileSet)
-                //    {
-                //        js.Serialize(writer, item);
-                //    }
-
                 js.Serialize(writer, PdfFileSet);
                 writer.Flush();
             }
@@ -51,15 +63,6 @@ namespace PdfManager.Data
             js.NullValueHandling = NullValueHandling.Ignore;
             using (JsonTextReader reader = new JsonTextReader(sr) { CloseInput = false })
             {
-                //PdfFile p = null;
-
-                //while (true)
-                //{
-                //    p = js.Deserialize<PdfFile>(reader);
-                //    if (p == null)
-                //        continue;
-                //    PdfFileSet.Add(p); 
-                //}
                 PdfFileSet.AddRange(js.Deserialize<List<PdfFile>>(reader));
             }
         }

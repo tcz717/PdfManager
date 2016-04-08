@@ -284,7 +284,7 @@ namespace PdfManager
                 e.CanExecute = false;
         }
         
-        private void Export_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog()
             {
@@ -296,7 +296,7 @@ namespace PdfManager
 
             if (dialog.ShowDialog() ?? false)
             {
-                container.Expert(dialog.FileName);
+                await container.ExpertAsync(dialog.FileName);
             }
         }
         private void Import_Executed(object sender, ExecutedRoutedEventArgs e)
