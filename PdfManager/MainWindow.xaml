@@ -8,17 +8,6 @@
         mc:Ignorable="d"
         Title="成都电力机械厂PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded" MinWidth="600" MinHeight="400" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
-        <CollectionViewSource x:Key="pdfFileViewSource" d:DesignSource="{d:DesignInstance {x:Type Data:PdfFile}, CreateList=True}"/>
-        <!--<Data:PdfSearchResult x:Key="SearchResult"/>-->
-        <Style x:Key="BlackIconStyle" TargetType="Image">
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-            <Setter Property="Width" Value="16"/>
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style x:Key="BlackMenuItem" TargetType="MenuItem">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -31,6 +20,8 @@
         <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" CanExecute="True_CanExecute"/>
         <CommandBinding Command="ApplicationCommands.Find" Executed="Find_Executed" CanExecute="Find_CanExecute"/>
         <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete_Executed" CanExecute="Delete_CanExecute"/>
+        <CommandBinding Command="NavigationCommands.PreviousPage" Executed="Prev_Executed" CanExecute="Prev_CanExecute"/>
+        <CommandBinding Command="NavigationCommands.NextPage" Executed="Next_Executed" CanExecute="Next_CanExecute"/>
     </Window.CommandBindings>
     <Grid>
         <DockPanel>
@@ -45,7 +36,11 @@
                 </MenuItem>
                 <StackPanel Orientation="Horizontal">
                     <Image Source="black/Find.png" Style="{DynamicResource BlackIconStyle}"/>
-                    <TextBox x:Name="txtKeyword" Width="100" MaxLength="20" Margin="3,0,0,0"/>
+                    <TextBox x:Name="txtKeyword" Width="100" MaxLength="20" Margin="3,0,0,0">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="ApplicationCommands.Find"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
                 </StackPanel>
                 <MenuItem x:Name="btnNew" Command="ApplicationCommands.Find" Style="{DynamicResource BlackMenuItem}">
                     <MenuItem.Header>
@@ -60,18 +55,29 @@
                         <TextBlock VerticalAlignment="Center">删除</TextBlock>
                     </MenuItem.Header>
                 </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="btnPrev" Command="NavigationCommands.PreviousPage" Style="{DynamicResource BlackMenuItem}" Header="">
+                    <MenuItem.Icon>
+                        <Image Source="black/Left.png" Style="{DynamicResource BlackIconStyle}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="btnNext" Command="NavigationCommands.NextPage" Style="{DynamicResource BlackMenuItem}" Header="">
+                    <MenuItem.Icon>
+                        <Image Source="black/Right.png" Style="{DynamicResource BlackIconStyle}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem/>
+                <MenuItem/>
             </Menu>
             <TreeView x:Name="trvResult"  Width="150" VerticalContentAlignment="Stretch" SelectedItemChanged="trvResult_SelectedItemChanged">
-                <TreeView.CommandBindings>
-                    <CommandBinding Command="MediaCommands.Select" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed"/>
-                </TreeView.CommandBindings>
                 <TreeView.DataContext>
                     <Data:PdfSearchResult/>
                 </TreeView.DataContext>
                 <TreeViewItem Header="标题" ItemsSource="{Binding ByTittle}" IsExpanded="True">
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Tittle}" >
+                            <TextBlock Text="{Binding PdfFile.Tittle}" >
                             </TextBlock>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
@@ -80,8 +86,8 @@
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding Tittle}" />
-                                <TextBlock Text="{Binding FileId}" FontStyle="Italic" FontSize="10" />
+                                <TextBlock Text="{Binding PdfFile.Tittle}" />
+                                <TextBlock Text="{Binding PdfFile.FileId}" FontStyle="Italic" FontSize="10" />
                             </StackPanel>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
@@ -90,8 +96,8 @@
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding Tittle}" />
-                                <TextBlock Text="{Binding Year}" FontStyle="Italic" FontSize="10" />
+                                <TextBlock Text="{Binding PdfFile.Tittle}" />
+                                <TextBlock Text="{Binding PdfFile.Year}" FontStyle="Italic" FontSize="10" />
                             </StackPanel>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
@@ -100,8 +106,8 @@
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding Tittle}" />
-                                <TextBlock Text="{Binding Other1}" FontStyle="Italic" FontSize="10" />
+                                <TextBlock Text="{Binding PdfFile.Tittle}" />
+                                <TextBlock Text="{Binding PdfFile.Other1}" FontStyle="Italic" FontSize="10" />
                             </StackPanel>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>
@@ -110,8 +116,8 @@
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding Tittle}" />
-                                <TextBlock Text="{Binding Other2}" FontStyle="Italic" FontSize="10" />
+                                <TextBlock Text="{Binding PdfFile.Tittle}" />
+                                <TextBlock Text="{Binding PdfFile.Other2}" FontStyle="Italic" FontSize="10" />
                             </StackPanel>
                         </DataTemplate>
                     </TreeViewItem.ItemTemplate>

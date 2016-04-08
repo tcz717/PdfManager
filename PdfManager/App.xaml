@@ -9,5 +9,14 @@
         <System:String x:Key="Other1Name">其他1</System:String>
         <System:String x:Key="Other2Name">其他2</System:String>
 
+        <Style x:Key="BlackIconStyle" TargetType="Image">
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

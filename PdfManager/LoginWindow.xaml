@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:PdfManager"
         mc:Ignorable="d"
         Title="登录PDF管理系统" Height="190" Width="275" Loaded="Window_Loaded" MinWidth="275" MinHeight="190" KeyUp="Window_KeyUp" WindowStartupLocation="CenterScreen">
+    <Window.Icon>
+        <TransformedBitmap Source="black/Login.png" >
+            <TransformedBitmap.Transform>
+                <ScaleTransform ScaleY="1.5" ScaleX="1.5"/>
+            </TransformedBitmap.Transform>
+        </TransformedBitmap>
+    </Window.Icon>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Save" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute"/>
     </Window.CommandBindings>
