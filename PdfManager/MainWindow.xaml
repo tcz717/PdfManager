@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PdfManager"
         xmlns:Data="clr-namespace:PdfManager.Data" x:Class="PdfManager.MainWindow"
         mc:Ignorable="d"
-        Title="中电建PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded" MinWidth="600" MinHeight="400">
+        Title="成都电力机械厂PDF文档管理系统" Height="480" Width="800" Loaded="Window_Loaded" MinWidth="600" MinHeight="400" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Window.Resources>
         <CollectionViewSource x:Key="pdfFileViewSource" d:DesignSource="{d:DesignInstance {x:Type Data:PdfFile}, CreateList=True}"/>
         <!--<Data:PdfSearchResult x:Key="SearchResult"/>-->
@@ -19,15 +19,23 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="BlackMenuItem" TargetType="MenuItem">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" CanExecute="True_CanExecute"/>
-        <CommandBinding Command="ApplicationCommands.Find" Executed="Find_Executed" CanExecute="True_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Find" Executed="Find_Executed" CanExecute="Find_CanExecute"/>
+        <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete_Executed" CanExecute="Delete_CanExecute"/>
     </Window.CommandBindings>
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem x:Name="btnSearch" Command="ApplicationCommands.New">
+                <MenuItem x:Name="btnSearch" Command="ApplicationCommands.New" Style="{DynamicResource BlackMenuItem}">
                     <MenuItem.Icon>
                         <Image Source="black/Add.png" Style="{DynamicResource BlackIconStyle}"/>
                     </MenuItem.Icon>
@@ -39,9 +47,17 @@
                     <Image Source="black/Find.png" Style="{DynamicResource BlackIconStyle}"/>
                     <TextBox x:Name="txtKeyword" Width="100" MaxLength="20" Margin="3,0,0,0"/>
                 </StackPanel>
-                <MenuItem x:Name="btnNew" Command="ApplicationCommands.Find">
+                <MenuItem x:Name="btnNew" Command="ApplicationCommands.Find" Style="{DynamicResource BlackMenuItem}">
                     <MenuItem.Header>
                         <TextBlock VerticalAlignment="Center">查找</TextBlock>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem x:Name="btnDelete" Command="ApplicationCommands.Delete" Style="{DynamicResource BlackMenuItem}">
+                    <MenuItem.Icon>
+                        <Image Source="black/Delete.png" Style="{DynamicResource BlackIconStyle}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center">删除</TextBlock>
                     </MenuItem.Header>
                 </MenuItem>
             </Menu>

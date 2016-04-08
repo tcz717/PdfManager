@@ -6,7 +6,7 @@
         xmlns:data="clr-namespace:PdfManager.Data"
         xmlns:local="clr-namespace:PdfManager"
         mc:Ignorable="d"
-        Title="添加Pdf" Height="300" Width="300" MinWidth="300" MinHeight="300" MaxWidth="400" MaxHeight="600" Loaded="Window_Loaded">
+        Title="添加Pdf" Height="300" Width="300" MinWidth="300" MinHeight="300" MaxWidth="400" MaxHeight="600" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Save" Executed="CommandBinding_Executed" CanExecute="CommandBinding_CanExecute" />
     </Window.CommandBindings>

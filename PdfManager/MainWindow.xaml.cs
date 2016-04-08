@@ -27,24 +27,27 @@ namespace PdfManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        PdfManageModelContainer container;
+        PdfFile currentPdf;
 
         public MainWindow()
         {
+            Task.Run(new Action(PreLoadEF));
             InitializeComponent();
         }
 
-        PdfiumViewer.PdfViewer pdfViewr = new PdfiumViewer.PdfViewer();
+        PdfiumViewer.PdfViewer pdfViewer = new PdfiumViewer.PdfViewer();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(new Action(PreLoadEF));
-
             LoginWindow login = new LoginWindow();
             if (!(login.ShowDialog() ?? false))
                 Close();
             CollectionViewSource pdfFileViewSource = ((CollectionViewSource)(FindResource("pdfFileViewSource")));
             // 通过设置 CollectionViewSource.Source 属性加载数据: 
             // pdfFileViewSource.Source = [一般数据源]
-            winfromHost.Child = pdfViewr;
+            winfromHost.Child = pdfViewer;
+
+            container = new PdfManageModelContainer();
         }
 
         private void PreLoadEF()
@@ -58,6 +61,7 @@ namespace PdfManager
         private void RefushResult(PdfSearchResult result)
         {
             trvResult.DataContext = result;
+            Trace.WriteLine(nameof(RefushResult));
         }
 
         #region TmepCode
@@ -102,12 +106,7 @@ namespace PdfManager
                 return;
             try
             {
-                PdfiumViewer.PdfDocument doc = await Task.Run<PdfiumViewer.PdfDocument>(() =>
-                {
-                    return PdfiumViewer.PdfDocument.Load(pdf.GetFullPath());
-                });
-                //var fs = File.OpenRead(pdf.GetFullPath());
-                pdfViewr.Document = doc;
+                await LoadPdf(pdf);
             }
             catch (Exception ex)
             {
@@ -115,6 +114,31 @@ namespace PdfManager
             }
         }
 
+        private async Task LoadPdf(PdfFile pdf)
+        {
+            PdfiumViewer.PdfDocument doc = await Task.Run(() =>
+            {
+                return PdfiumViewer.PdfDocument.Load(pdf.GetFullPath());
+            });
+            //var fs = File.OpenRead(pdf.GetFullPath());
+            pdfViewer.Document = doc;
+            currentPdf = pdf;
+        }
+
+        private void True_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = trvResult?.SelectedItem is PdfFile;
+            Debug.WriteLine(e.CanExecute, nameof(Delete_CanExecute));
+        }
+        private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !string.IsNullOrWhiteSpace(txtKeyword.Text);
+        }
+        
         private void New_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog()
@@ -135,17 +159,39 @@ namespace PdfManager
                 }
             }
         }
-        private void True_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
         private async void Find_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             PdfSearchResult result;
-            using (PdfManageModelContainer container = new PdfManageModelContainer())
+            result = await container.Search(txtKeyword.Text);
+            RefushResult(result);
+        }
+        private async void Delete_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            int result;
+            var pdf = trvResult.SelectedItem as PdfFile;
+            container.PdfFileSet.Remove(pdf);
+            result = await container.SaveChangesAsync();
+
+            Trace.Assert(result == 1);
+            RemoveFileFromResult(pdf);
+
+            if (currentPdf == pdf)
             {
-                result = await container.Search(txtKeyword.Text);
+                //var doc = pdfViewer.Document;
+                //pdfViewer.
+                //pdfViewer.Document = null;
+                //doc.Dispose();
             }
+        }
+
+        private void RemoveFileFromResult(PdfFile pdf)
+        {
+            var result = trvResult.DataContext as PdfSearchResult;
+
+            Trace.Assert(result != null);
+
+            Trace.Assert(result.Remove(pdf));
+
             RefushResult(result);
         }
     }

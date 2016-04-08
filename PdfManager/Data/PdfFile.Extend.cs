@@ -1,6 +1,7 @@
 ﻿using PdfManager.Properties;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -55,10 +56,12 @@ namespace PdfManager.Data
             var set = container.PdfFileSet;
             var result = new PdfSearchResult()
             {
-                ByTittle = await set.Where(n => 
+                ByTittle = await set.Where(n =>
                     n.Tittle.ToLower().Contains(kw)).ToListAsync(),
+                //ByTittle = new ObservableCollection<PdfFile>(await set.Where(n =>
+                //   n.Tittle.ToLower().Contains(kw)).ToArrayAsync()),
                 ByOther1 = await set.Where(n =>
-                    n.Other1.ToLower().Contains(kw)).ToListAsync(),
+                        n.Other1.ToLower().Contains(kw)).ToListAsync(),
                 ByOther2 = await set.Where(n =>
                     n.Other2.ToLower().Contains(kw)).ToListAsync(),
                 ByNumber = await set.Where(n =>
