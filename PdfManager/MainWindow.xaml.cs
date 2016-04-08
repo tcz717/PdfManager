@@ -120,7 +120,7 @@ namespace PdfManager
             {
                 return PdfiumViewer.PdfDocument.Load(pdf.GetFullPath());
             });
-            //var fs = File.OpenRead(pdf.GetFullPath());
+            pdfViewer.Document?.Dispose();
             pdfViewer.Document = doc;
             currentPdf = pdf;
         }
@@ -169,6 +169,13 @@ namespace PdfManager
         {
             int result;
             var pdf = trvResult.SelectedItem as PdfFile;
+            Trace.Assert(pdf != null);
+
+            if (MessageBox.Show("是否确认删除？", "删除文件", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return;
+            }
+
             container.PdfFileSet.Remove(pdf);
             result = await container.SaveChangesAsync();
 
@@ -177,11 +184,14 @@ namespace PdfManager
 
             if (currentPdf == pdf)
             {
-                //var doc = pdfViewer.Document;
-                //pdfViewer.
-                //pdfViewer.Document = null;
-                //doc.Dispose();
+                //PdfiumViewer目前没有更好解决方案
+                pdfViewer.Document.Dispose();
+                pdfViewer.Dispose();
+                pdfViewer = new PdfiumViewer.PdfViewer();
+                winfromHost.Child = pdfViewer;
             }
+
+            await Task.Run(() => File.Delete(pdf.GetFullPath()));
         }
 
         private void RemoveFileFromResult(PdfFile pdf)
