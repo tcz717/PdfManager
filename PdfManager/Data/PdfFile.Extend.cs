@@ -56,18 +56,18 @@ namespace PdfManager.Data
             var set = container.PdfFileSet;
             var result = new PdfSearchResult()
             {
-                ByTittle = await set.Where(n =>
-                    n.Tittle.ToLower().Contains(kw)).ToListAsync(),
-                //ByTittle = new ObservableCollection<PdfFile>(await set.Where(n =>
-                //   n.Tittle.ToLower().Contains(kw)).ToArrayAsync()),
-                ByOther1 = await set.Where(n =>
-                        n.Other1.ToLower().Contains(kw)).ToListAsync(),
-                ByOther2 = await set.Where(n =>
-                    n.Other2.ToLower().Contains(kw)).ToListAsync(),
-                ByNumber = await set.Where(n =>
-                    n.FileId.ToString().Contains(kw)).ToListAsync(),
-                ByYear = await set.Where(n =>
-                    n.Year.ToString().Contains(kw)).ToListAsync(),
+                //ByTittle = await set.Where(n =>
+                //    n.Tittle.ToLower().Contains(kw)).ToListAsync(),
+                ByTittle = new ObservableCollection<PdfFile>(await set.Where(n =>
+                   n.Tittle.ToLower().Contains(kw)).ToArrayAsync()),
+                ByOther1 = new ObservableCollection<PdfFile>(await set.Where(n =>
+                        n.Other1.ToLower().Contains(kw)).ToArrayAsync()),
+                ByOther2 = new ObservableCollection<PdfFile>(await set.Where(n =>
+                    n.Other2.ToLower().Contains(kw)).ToArrayAsync()),
+                ByNumber = new ObservableCollection<PdfFile>(await set.Where(n =>
+                    n.FileId.ToString().Contains(kw)).ToArrayAsync()),
+                ByYear = new ObservableCollection<PdfFile>(await set.Where(n =>
+                    n.Year.ToString().Contains(kw)).ToArrayAsync()),
             };
             return result;
         }
