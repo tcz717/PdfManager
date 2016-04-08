@@ -299,8 +299,22 @@ namespace PdfManager
                 await container.ExpertAsync(dialog.FileName);
             }
         }
-        private void Import_Executed(object sender, ExecutedRoutedEventArgs e)
+        private async void Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Multiselect = false,
+                DefaultExt = "zip",
+                DereferenceLinks = true,
+                Title = "导出Pdf存档",
+                Filter = "压缩文档|*.zip",
+            };
+            if (dialog.ShowDialog() ?? false)
+            {
+                var path = dialog.FileName;
+                await container.ImportAsync(dialog.FileName);
+                await container.SaveChangesAsync();
+            }
         }
 
         private void Prev_Executed(object sender, ExecutedRoutedEventArgs e)

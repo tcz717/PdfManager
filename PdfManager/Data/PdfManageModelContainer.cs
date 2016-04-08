@@ -45,6 +45,36 @@ namespace PdfManager.Data
                 }
             }
         }
+        public async Task ImportAsync(string fileName)
+        {
+            using (FileStream stream = File.OpenRead(fileName))
+            {
+                ZipInputStream zip = new ZipInputStream(stream);
+
+                ZipEntry next;
+                while ((next = zip.GetNextEntry()) != null)
+                {
+                    if (next.Name == "index.json")
+                    {
+                        DecodePdfList(new StreamReader(zip));
+                        continue;
+                    }
+                    using (FileStream fs = File.Create(
+                        Path.Combine(PdfFile.StorePath, next.Name)))
+                    {
+                        byte[] buffer = new byte[BufferSize];
+                        int re = (int)next.Size;
+                        int wr = 0;
+                        while (re > 0)
+                        {
+                            wr = zip.Read(buffer, 0, BufferSize);
+                            await fs.WriteAsync(buffer, 0, wr);
+                            re -= wr;
+                        }
+                    }
+                }
+            }
+        }
 
         public void EncodePdfList(StreamWriter sw)
         {
