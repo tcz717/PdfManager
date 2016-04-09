@@ -168,7 +168,7 @@ namespace PdfManager
         {
             OpenFileDialog dialog = new OpenFileDialog()
             {
-                Multiselect = false,
+                Multiselect = true,
                 DefaultExt = "pdf",
                 DereferenceLinks = true,
                 Title = "打开PDF文件",
@@ -176,9 +176,14 @@ namespace PdfManager
             };
             if (dialog.ShowDialog() ?? false)
             {
-                var path = dialog.FileName;
-                AddPdfWindow addwindow = new AddPdfWindow(path);
-                addwindow.ShowDialog();
+                foreach (var item in dialog.FileNames)
+                {
+                    AddPdfWindow addwindow = new AddPdfWindow(item);
+                    if (!(addwindow.ShowDialog() ?? false))
+                    {
+                        break;
+                    }
+                }
             }
         }
 
