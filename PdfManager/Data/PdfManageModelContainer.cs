@@ -63,13 +63,10 @@ namespace PdfManager.Data
                         Path.Combine(PdfFile.StorePath, next.Name)))
                     {
                         byte[] buffer = new byte[BufferSize];
-                        int re = (int)next.Size;
-                        int wr = 0;
-                        while (re > 0)
+                        int re = 0;
+                        while ((re = zip.Read(buffer, 0, BufferSize)) > 0)
                         {
-                            wr = zip.Read(buffer, 0, BufferSize);
-                            await fs.WriteAsync(buffer, 0, wr);
-                            re -= wr;
+                            await fs.WriteAsync(buffer, 0, BufferSize);
                         }
                     }
                 }

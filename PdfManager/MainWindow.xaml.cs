@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using PdfManager.Data;
+using PdfManager.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Mapping;
@@ -389,6 +390,9 @@ namespace PdfManager
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            App.Current.Resources["Other1Name"] = Settings.Default.Other1Name;
+            App.Current.Resources["Other2Name"] = Settings.Default.Other2Name;
+
             LoginWindow login = new LoginWindow();
             if (!(login.ShowDialog() ?? false))
                 Close();

@@ -11,5 +11,11 @@
     <Setting Name="StoreDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">store</Value>
     </Setting>
+    <Setting Name="Other1Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">其他1</Value>
+    </Setting>
+    <Setting Name="Other2Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">其他2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

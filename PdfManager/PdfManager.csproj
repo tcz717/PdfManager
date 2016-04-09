@@ -116,6 +116,7 @@
     <Compile Include="Data\User.cs">
       <DependentUpon>PdfManageModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Page Include="AddPdfWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

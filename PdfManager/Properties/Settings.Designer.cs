@@ -58,5 +58,29 @@ namespace PdfManager.Properties {
                 this["StoreDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("其他1")]
+        public string Other1Name {
+            get {
+                return ((string)(this["Other1Name"]));
+            }
+            set {
+                this["Other1Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("其他2")]
+        public string Other2Name {
+            get {
+                return ((string)(this["Other2Name"]));
+            }
+            set {
+                this["Other2Name"] = value;
+            }
+        }
     }
 }

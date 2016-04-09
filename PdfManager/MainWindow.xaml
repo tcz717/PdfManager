@@ -63,7 +63,7 @@
                         <Image Source="black/Left.png" Style="{DynamicResource BlackIconStyle}"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Label x:Name="labTittle" Content="{Binding Tittle}" MaxWidth="300" >
+                <Label x:Name="labTittle" Content="{Binding Tittle}" Width="200" >
                     <Label.DataContext>
                         <Data:PdfFile/>
                     </Label.DataContext>
