@@ -45,7 +45,7 @@ namespace PdfManager.Data
                 }
             }
         }
-        public async Task ImportAsync(string fileName)
+        public async Task ImportAsync(string fileName, Func<bool, PdfFile> conflictHandle = null)
         {
             using (FileStream stream = File.OpenRead(fileName))
             {
@@ -56,7 +56,7 @@ namespace PdfManager.Data
                 {
                     if (next.Name == "index.json")
                     {
-                        DecodePdfList(new StreamReader(zip));
+                        DecodePdfList(new StreamReader(zip), conflictHandle);
                         continue;
                     }
                     using (FileStream fs = File.Create(
@@ -84,12 +84,17 @@ namespace PdfManager.Data
             }
         }
 
-        public void DecodePdfList(StreamReader sr)
+        public void DecodePdfList(StreamReader sr, Func<bool, PdfFile> conflictHandle = null)
         {
             JsonSerializer js = new JsonSerializer();
             js.NullValueHandling = NullValueHandling.Ignore;
             using (JsonTextReader reader = new JsonTextReader(sr) { CloseInput = false })
             {
+                //var pdfs = js.Deserialize<IEnumerable<PdfFile>>(reader);
+                //foreach (var item in pdfs)
+                //{
+                //    if(PdfFileSet.Any())
+                //}
                 PdfFileSet.AddRange(js.Deserialize<List<PdfFile>>(reader));
             }
         }

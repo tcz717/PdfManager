@@ -308,6 +308,10 @@ namespace PdfManager
         }
         private async void Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            var sure = MessageBox.Show("如果导入数据中有相同文件可能会出现重复项是否继续？",
+                "可能存在重复项", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (sure == MessageBoxResult.No)
+                return;
             OpenFileDialog dialog = new OpenFileDialog()
             {
                 Multiselect = false,
