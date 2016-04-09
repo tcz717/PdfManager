@@ -87,31 +87,38 @@ namespace PdfManager
 
         private async void Delete_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            int result;
-            var select = trvResult.SelectedItem as PdfSearchItem;
-            Trace.Assert(select != null);
-            var pdf = select.PdfFile;
-
-            if (MessageBox.Show("是否确认删除？", "删除文件", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            try
             {
-                return;
+                int result;
+                var select = trvResult.SelectedItem as PdfSearchItem;
+                Trace.Assert(select != null);
+                var pdf = select.PdfFile;
+
+                if (MessageBox.Show("是否确认删除？", "删除文件", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+                {
+                    return;
+                }
+
+                container.PdfFileSet.Remove(pdf);
+                result = await container.SaveChangesAsync();
+                Trace.Assert(result == 1);
+                RemoveFileFromResult(pdf);
+
+                if (CurrentPdf == pdf)
+                {
+                    //PdfiumViewer目前没有更好解决方案
+                    pdfViewer.Document.Dispose();
+                    pdfViewer.Dispose();
+                    pdfViewer = new PdfiumViewer.PdfViewer();
+                    winfromHost.Child = pdfViewer;
+                }
+
+                await Task.Run(() => File.Delete(pdf.GetFullPath()));
             }
-
-            container.PdfFileSet.Remove(pdf);
-            result = await container.SaveChangesAsync();
-            Trace.Assert(result == 1);
-            RemoveFileFromResult(pdf);
-
-            if (CurrentPdf == pdf)
+            catch (Exception ex)
             {
-                //PdfiumViewer目前没有更好解决方案
-                pdfViewer.Document.Dispose();
-                pdfViewer.Dispose();
-                pdfViewer = new PdfiumViewer.PdfViewer();
-                winfromHost.Child = pdfViewer;
+                Trace.Fail(ex.ToString());
             }
-
-            await Task.Run(() => File.Delete(pdf.GetFullPath()));
         }
 
         private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -155,13 +162,20 @@ namespace PdfManager
 
         private async Task LoadPdf(PdfFile pdf)
         {
-            PdfiumViewer.PdfDocument doc = await Task.Run(() =>
+            try
             {
-                return PdfiumViewer.PdfDocument.Load(pdf.GetFullPath());
-            });
-            pdfViewer.Document?.Dispose();
-            pdfViewer.Document = doc;
-            CurrentPdf = pdf;
+                PdfiumViewer.PdfDocument doc = await Task.Run(() =>
+                {
+                    return PdfiumViewer.PdfDocument.Load(pdf.GetFullPath());
+                });
+                pdfViewer.Document?.Dispose();
+                pdfViewer.Document = doc;
+                CurrentPdf = pdf;
+            }
+            catch (Exception ex)
+            {
+                Trace.Fail(ex.ToString());
+            }
         }
 
         private void New_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -292,41 +306,55 @@ namespace PdfManager
         
         private async void Export_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog()
+            try
             {
-                DefaultExt = "zip",
-                DereferenceLinks = true,
-                Title = "导出Pdf存档",
-                Filter = "压缩文档|*.zip",
-            };
+                SaveFileDialog dialog = new SaveFileDialog()
+                {
+                    DefaultExt = "zip",
+                    DereferenceLinks = true,
+                    Title = "导出Pdf存档",
+                    Filter = "压缩文档|*.zip",
+                };
 
-            if (dialog.ShowDialog() ?? false)
+                if (dialog.ShowDialog() ?? false)
+                {
+                    await container.ExpertAsync(dialog.FileName);
+                    MessageBox.Show("导出成功", "导出成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
             {
-                await container.ExpertAsync(dialog.FileName);
-                MessageBox.Show("导出成功", "导出成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                Trace.Fail(ex.ToString());
             }
         }
         private async void Import_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var sure = MessageBox.Show("如果导入数据中有相同文件可能会出现重复项是否继续？",
-                "可能存在重复项", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (sure == MessageBoxResult.No)
-                return;
-            OpenFileDialog dialog = new OpenFileDialog()
+            try
             {
-                Multiselect = false,
-                DefaultExt = "zip",
-                DereferenceLinks = true,
-                Title = "导入Pdf存档",
-                Filter = "压缩文档|*.zip",
-            };
-            if (dialog.ShowDialog() ?? false)
-            {
-                var path = dialog.FileName;
-                await container.ImportAsync(dialog.FileName);
-                await container.SaveChangesAsync();
+                var sure = MessageBox.Show("如果导入数据中有相同文件可能会出现重复项是否继续？",
+             "可能存在重复项", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (sure == MessageBoxResult.No)
+                    return;
+                OpenFileDialog dialog = new OpenFileDialog()
+                {
+                    Multiselect = false,
+                    DefaultExt = "zip",
+                    DereferenceLinks = true,
+                    Title = "导入Pdf存档",
+                    Filter = "压缩文档|*.zip",
+                };
+                if (dialog.ShowDialog() ?? false)
+                {
+                    var path = dialog.FileName;
+                    await container.ImportAsync(dialog.FileName);
+                    await container.SaveChangesAsync();
 
-                MessageBox.Show("导入成功", "导入成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("导入成功", "导入成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.Fail(ex.ToString());
             }
         }
 
@@ -386,17 +414,24 @@ namespace PdfManager
 
         private async void trvResult_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            Debug.WriteLine(e.NewValue);
-            PdfSearchItem pdf = e.NewValue as PdfSearchItem;
-            if (pdf == null)
-                return;
             try
             {
-                await LoadPdf(pdf.PdfFile);
+                Debug.WriteLine(e.NewValue);
+                PdfSearchItem pdf = e.NewValue as PdfSearchItem;
+                if (pdf == null)
+                    return;
+                try
+                {
+                    await LoadPdf(pdf.PdfFile);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Fail(ex.ToString());
+                }
             }
             catch (Exception ex)
             {
-                Debug.Fail(ex.ToString());
+                Trace.Fail(ex.ToString());
             }
         }
 

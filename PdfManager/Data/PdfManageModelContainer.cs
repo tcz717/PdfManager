@@ -59,6 +59,11 @@ namespace PdfManager.Data
                         DecodePdfList(new StreamReader(zip), conflictHandle);
                         continue;
                     }
+                    else if (Path.GetExtension(next.Name.ToLower()) == ".pdf")
+                    {
+                        continue;
+                    }
+
                     using (FileStream fs = File.Create(
                         Path.Combine(PdfFile.StorePath, next.Name)))
                     {
