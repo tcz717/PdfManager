@@ -43,8 +43,6 @@ namespace PdfManager
         {
             var data = new PdfFile(path);
             grdMain.DataContext = data;
-            if (!IO.Directory.Exists(storePath))
-                IO.Directory.CreateDirectory(storePath);
         }
 
         private async void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)

@@ -440,6 +440,9 @@ namespace PdfManager
             App.Current.Resources["Other1Name"] = Settings.Default.Other1Name;
             App.Current.Resources["Other2Name"] = Settings.Default.Other2Name;
 
+            if (!Directory.Exists(PdfFile.StorePath))
+                Directory.CreateDirectory(PdfFile.StorePath);
+
             LoginWindow login = new LoginWindow();
             if (!(login.ShowDialog() ?? false))
                 Close();
