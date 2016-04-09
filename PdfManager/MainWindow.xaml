@@ -26,8 +26,15 @@
         <CommandBinding Command="NavigationCommands.NextPage" Executed="Next_Executed" CanExecute="Next_CanExecute"/>
     </Window.CommandBindings>
     <Grid>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="2">
                 <MenuItem x:Name="btnSearch" Command="ApplicationCommands.New" Style="{DynamicResource BlackMenuItem}">
                     <MenuItem.Icon>
                         <Image Source="black/Add.png" Style="{DynamicResource BlackIconStyle}"/>
@@ -91,7 +98,7 @@
                     </MenuItem.Header>
                 </MenuItem>
             </Menu>
-            <TreeView x:Name="trvResult"  Width="150" VerticalContentAlignment="Stretch" SelectedItemChanged="trvResult_SelectedItemChanged">
+            <TreeView x:Name="trvResult" VerticalContentAlignment="Stretch" SelectedItemChanged="trvResult_SelectedItemChanged" Grid.Row="1">
                 <TreeView.DataContext>
                     <Data:PdfSearchResult/>
                 </TreeView.DataContext>
@@ -144,7 +151,6 @@
                     </TreeViewItem.ItemTemplate>
                 </TreeViewItem>
             </TreeView>
-            <WindowsFormsHost x:Name="winfromHost" />
-        </DockPanel>
+        <WindowsFormsHost x:Name="winfromHost" Grid.Row="1" Grid.Column="1" />
     </Grid>
 </Window>
