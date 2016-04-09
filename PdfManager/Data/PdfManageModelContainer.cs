@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -59,7 +60,7 @@ namespace PdfManager.Data
                         DecodePdfList(new StreamReader(zip), conflictHandle);
                         continue;
                     }
-                    else if (Path.GetExtension(next.Name.ToLower()) == ".pdf")
+                    else if (Path.GetExtension(next.Name.ToLower()) != ".pdf")
                     {
                         continue;
                     }
@@ -72,6 +73,7 @@ namespace PdfManager.Data
                         while ((re = zip.Read(buffer, 0, BufferSize)) > 0)
                         {
                             await fs.WriteAsync(buffer, 0, BufferSize);
+                            Trace.WriteLine(next.Name, nameof(ImportAsync));
                         }
                     }
                 }
