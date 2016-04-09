@@ -303,6 +303,7 @@ namespace PdfManager
             if (dialog.ShowDialog() ?? false)
             {
                 await container.ExpertAsync(dialog.FileName);
+                MessageBox.Show("导出成功", "导出成功", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
         private async void Import_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -312,7 +313,7 @@ namespace PdfManager
                 Multiselect = false,
                 DefaultExt = "zip",
                 DereferenceLinks = true,
-                Title = "导出Pdf存档",
+                Title = "导入Pdf存档",
                 Filter = "压缩文档|*.zip",
             };
             if (dialog.ShowDialog() ?? false)
@@ -320,6 +321,8 @@ namespace PdfManager
                 var path = dialog.FileName;
                 await container.ImportAsync(dialog.FileName);
                 await container.SaveChangesAsync();
+
+                MessageBox.Show("导入成功", "导入成功", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
