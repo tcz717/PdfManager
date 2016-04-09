@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfManager", "PdfManager\Pd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfManagerTests", "PdfManagerTests\PdfManagerTests.csproj", "{574B8EE2-D044-4B84-812E-2960FFE9A733}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{66C5532D-C1A8-4218-AF74-5A6FB88C63B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{574B8EE2-D044-4B84-812E-2960FFE9A733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66C5532D-C1A8-4218-AF74-5A6FB88C63B4}.Debug|Any CPU.ActiveCfg = Debug
+		{66C5532D-C1A8-4218-AF74-5A6FB88C63B4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
