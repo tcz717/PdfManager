@@ -44,29 +44,38 @@ namespace PdfManager
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            using (PdfManageModelContainer container = new PdfManageModelContainer())
+            try
             {
-                var name = txtUsername.Text;
-                var pwd = txtPassword.Password;
-                if (string.IsNullOrWhiteSpace(name))
+                using (PdfManageModelContainer container = new PdfManageModelContainer())
                 {
-                    Trace.WriteLine(txbError.Text = "用户名不能为空");
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(pwd))
-                {
-                    Trace.WriteLine(name, txbError.Text = "密码不能为空");
-                    return;
-                }
+                    var name = txtUsername.Text;
+                    var pwd = txtPassword.Password;
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Trace.WriteLine(txbError.Text = "用户名不能为空");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(pwd))
+                    {
+                        Trace.WriteLine(name, txbError.Text = "密码不能为空");
+                        return;
+                    }
 
-                if (!container.Login(name, pwd))
-                {
-                    Trace.WriteLine(new { Name = name, Password = pwd }, txbError.Text = "密码错误");
-                    return;
-                }
+                    if (!container.Login(name, pwd))
+                    {
+                        Trace.WriteLine(new { Name = name, Password = pwd }, txbError.Text = "密码错误");
+                        return;
+                    }
 
-                DialogResult = true;
-                Close();
+                    DialogResult = true;
+                    Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("请确认安装了x86或x64的Microsoft SQL 2014 Express LocalDb。",
+                    "数据库启动失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                Trace.Fail(ex.ToString());
             }
         }
 

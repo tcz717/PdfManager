@@ -106,11 +106,7 @@ namespace PdfManager
 
                 if (CurrentPdf == pdf)
                 {
-                    //PdfiumViewer目前没有更好解决方案
-                    pdfViewer.Document.Dispose();
-                    pdfViewer.Dispose();
-                    pdfViewer = new PdfiumViewer.PdfViewer();
-                    winfromHost.Child = pdfViewer;
+                    CloseCurrentFile();
                 }
 
                 await Task.Run(() => File.Delete(pdf.GetFullPath()));
@@ -119,6 +115,15 @@ namespace PdfManager
             {
                 Trace.Fail(ex.ToString());
             }
+        }
+
+        private void CloseCurrentFile()
+        {
+            //PdfiumViewer目前没有更好解决方案
+            pdfViewer.Document.Dispose();
+            pdfViewer.Dispose();
+            pdfViewer = new PdfiumViewer.PdfViewer();
+            winfromHost.Child = pdfViewer;
         }
 
         private void Find_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -346,11 +351,27 @@ namespace PdfManager
                 if (dialog.ShowDialog() ?? false)
                 {
                     var path = dialog.FileName;
+
+                    if (currentPdf != null)
+                        CloseCurrentFile();
+
                     await container.ImportAsync(dialog.FileName);
                     await container.SaveChangesAsync();
 
                     MessageBox.Show("导入成功", "导入成功", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("无法写入文件 可能是由于pdf已存在且正在被打开。",
+                    "文件写入失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                Trace.WriteLine(ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("无法写入文件 可能是由于权限原因。。",
+                    "文件写入失败", MessageBoxButton.OK, MessageBoxImage.Error);
+                Trace.WriteLine(ex);
             }
             catch (Exception ex)
             {
