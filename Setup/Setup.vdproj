@@ -64,12 +64,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EC11BD4E7EAADA21EFF1AB2BC24676BE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_077F77AD664149569F3111BCC217FFDC"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -103,6 +97,12 @@
         "OwnerKey" = "8:_97F2C73446A2252BF75F9572BA9DBE77"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EC11BD4E7EAADA21EFF1AB2BC24676BE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -121,6 +121,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -146,16 +154,6 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.6 (x86 和 x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.6"
-                    }
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.SqlServer.SqlLocalDB.11.1"
-                    {
-                    "Name" = "8:SQL Server 2012 Express LocalDB"
-                    "ProductCode" = "8:Microsoft.SqlServer.SqlLocalDB.11.1"
-                    }
                 }
             }
         }
@@ -430,7 +428,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:成都电力机械厂PDF文档管理系统"
         "ProductCode" = "8:{FB370969-9249-4F4A-8885-F01A651E5D72}"
-        "PackageCode" = "8:{578C0200-2F3C-437A-9AE6-9A0AECF96595}"
+        "PackageCode" = "8:{747D07A9-9822-44DD-8AF0-C20FDCAA4542}"
         "UpgradeCode" = "8:{FE8217DA-11CE-484F-9725-A5EC3FF550E9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
