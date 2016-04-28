@@ -17,5 +17,8 @@
     <Setting Name="Other2Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">其他2</Value>
     </Setting>
+    <Setting Name="SaveLog" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

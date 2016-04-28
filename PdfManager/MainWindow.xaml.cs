@@ -460,6 +460,18 @@ namespace PdfManager
         {
             App.Current.Resources["Other1Name"] = Settings.Default.Other1Name;
             App.Current.Resources["Other2Name"] = Settings.Default.Other2Name;
+            if (Settings.Default.SaveLog)
+            {
+                if (!Directory.Exists("log"))
+                    Directory.CreateDirectory("log");
+                var path = System.IO.Path.Combine("log", $"{DateTime.Now.ToFileTime()}.log");
+                Trace.Listeners.Add(new TextWriterTraceListener(File.OpenWrite(path)));
+                Trace.AutoFlush = true;
+                AppDomain.CurrentDomain.UnhandledException += (s, ex) =>
+                {
+                    Trace.WriteLine(ex);
+                };
+            }
 
             if (!Directory.Exists(PdfFile.StorePath))
                 Directory.CreateDirectory(PdfFile.StorePath);
